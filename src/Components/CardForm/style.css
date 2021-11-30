@@ -1,0 +1,63 @@
+.cardFormRoot {
+  display: flex;
+}
+.cardFormLeftSide {
+  flex: 2;
+}
+.cardFormRightSide {
+  flex: 1;
+  position: relative;
+  margin-left: 1.5rem;
+}
+.cardFormRightSide:before {
+  content: "";
+  position: absolute;
+  right: 110%;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+.rowFieldLabel {
+  color: #42526e;
+  font-size: 0.75rem;
+}
+.rowFieldIcon {
+  margin-right: 0.25rem;
+}
+.detailsBlock {
+  padding: 0.5rem;
+}
+.cardFormFieldLabel {
+  font-size: 1rem;
+  color: #42526e;
+  font-weight: 300;
+  padding-left: 0.5rem;
+  margin: 0.5rem 0 0.25rem 0;
+}
+.descriptionInput {
+  width: 100%;
+  font-family: "Oswald", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+.cardFormFooterButtons {
+  margin-top: 1rem;
+}
+
+.titleInput {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.timeRemainingInput {
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  width: 100%;
+}

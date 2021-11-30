@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../Components/Button";
+import { CardFormContainer } from "../Components/CardForm/cardFormContainer";
 import { Modal } from "../Components/Modal";
 import { useModalStore } from "../Components/Modal/state/modalContext";
 import "./style.css";
@@ -19,7 +20,9 @@ export const Layout: React.FC = ({ children }) => {
         </Button>
       </div>
       <div>{children}</div>
-      <Modal />
+      <Modal modalClass="modalContent">
+        <CardFormContainer />
+      </Modal>
     </div>
   );
 };
