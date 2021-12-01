@@ -7,7 +7,7 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 
-interface Option {
+export interface Option {
   value: string;
   label: string;
   color?: string;

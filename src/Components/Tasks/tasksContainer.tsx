@@ -1,9 +1,9 @@
-import { useObserver } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import React from "react";
-import { useTasksStore } from "./tasksContext";
 import { TasksList } from "./taskslist";
+import { tasksStore } from "./tasksStore";
 
-export const TasksContainer: React.FC = () => {
-  const tasksStore = useTasksStore();
-  return useObserver(() => <TasksList tasks={tasksStore.tasks} />);
-};
+export const TasksContainer: React.FC = observer(() => {
+  const { tasks } = tasksStore;
+  return <TasksList tasks={tasks} />;
+});

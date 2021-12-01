@@ -3,18 +3,18 @@ import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import "./style.css";
 import { FormComponent } from "./formComponent";
-import { TaskEntityType } from "../Tasks/tasksStore";
+import { TaskEntityType, tasksStore } from "../Tasks/tasksStore";
 import { Options } from "./selectFieldsOptions";
-import { useTasksStore } from "../Tasks/tasksContext";
-import { useModalStore } from "../Modal/state/modalContext";
+import { modalStore } from "../Modal/modalStore";
 
 export const CardFormContainer: React.FC = () => {
-  const taskStore = useTasksStore();
-  const modalStore = useModalStore();
+  const { tasks, activeTask, setActiveTask, addTask, editTask } = tasksStore;
+
+  const { setIsOpen } = modalStore;
   const { register, watch, handleSubmit, formState } = useForm<TaskEntityType>({
-    defaultValues: taskStore.activeTask
+    defaultValues: activeTask
       ? {
-          ...taskStore.activeTask,
+          ...activeTask,
         }
       : {
           priority: Options.priorities[0].value,
@@ -26,18 +26,18 @@ export const CardFormContainer: React.FC = () => {
 
   const onSubmit = (data: TaskEntityType) => {
     if (data) {
-      if (taskStore.tasks.findIndex((i) => i.id === data.id) > -1) {
-        taskStore.editTask(data.id, { ...data });
-        modalStore.setIsOpen(false)();
+      if (tasks.findIndex((i) => i.id === data.id) > -1) {
+        editTask(data.id, { ...data });
+        setIsOpen(false)();
         return;
       }
-      taskStore.addTask({ ...data, id: nanoid() });
-      modalStore.setIsOpen(false)();
+      addTask({ ...data, id: nanoid() });
+      setIsOpen(false)();
     }
   };
 
   React.useEffect(() => {
-    return () => taskStore.setActiveTask();
+    return () => setActiveTask();
   }, []);
   return (
     <FormComponent
