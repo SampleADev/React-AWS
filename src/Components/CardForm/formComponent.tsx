@@ -123,7 +123,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({
           <div className="row">
             <p className="rowFieldLabel"> Time remaining </p>
             <TextField
-              {...register("timeRemaining")}
+              {...register("timeRamaining")}
               placeHolder="Time remaining"
               className="timeRemainingInput"
             />

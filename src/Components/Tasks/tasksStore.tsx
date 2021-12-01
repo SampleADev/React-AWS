@@ -1,5 +1,7 @@
 import { makeAutoObservable, onBecomeObserved } from "mobx";
-import api from "../../shared/api";
+import { API } from "aws-amplify";
+import * as queries from "../../graphql/queries";
+import * as mutations from "../../graphql/mutations";
 
 export type TaskEntityType = {
   id: string;
@@ -9,7 +11,7 @@ export type TaskEntityType = {
   reporter: string;
   asignee: string;
   type: string;
-  timeRemaining: string;
+  timeRamaining: string;
 };
 
 export interface TasksStoreI {
@@ -37,38 +39,45 @@ class TaskStore {
   }
 
   *fetch() {
-    const response: { tasks: Array<TaskEntityType> } = yield api.getTasks();
-
-    // this.tasks = response.tasks;
+    const response: {
+      data: {
+        listTasks: {
+          items: Array<TaskEntityType>;
+        };
+      };
+    } = yield API.graphql({
+      query: queries.listTasks,
+    });
+    if (response && response.data && response.data.listTasks) {
+      this.tasks = response.data.listTasks.items;
+    }
   }
 
   *addTask(data: TaskEntityType) {
-    const tasksCopy = [...this.tasks];
-    this.tasks = [...tasksCopy, { ...data }];
-    // yield api.addNewTask(data)
-    // yield this.fetch()
+    yield API.graphql({
+      query: mutations.createTask,
+      variables: { input: { ...data } },
+    });
+    yield this.fetch();
   }
 
   *editTask(taskId: string, data: TaskEntityType) {
-    // yield api.editTask(taskId, data);
-    // yield this.fetch();
-    const index = this.tasks.findIndex((i) => i.id === taskId);
-    const tasksCopy = [...this.tasks];
-    this.tasks = [
-      ...tasksCopy.slice(0, index),
-      {
-        ...tasksCopy[index],
-        ...data,
-      },
-      ...tasksCopy.slice(index + 1),
-    ];
+    //@ts-ignore
+    const { createdAt, updatedAt, ...clearData } = data;
+    yield API.graphql({
+      query: mutations.updateTask,
+      variables: { input: clearData },
+    });
+
+    yield this.fetch();
   }
 
   *deleteTask(taskId: string) {
-    yield api.deleteTask(taskId);
-    const index = this.tasks.findIndex((i) => i.id === taskId);
-    const tasksCopy = [...this.tasks];
-    this.tasks = [...tasksCopy.slice(0, index), ...tasksCopy.slice(index + 1)];
+    yield API.graphql({
+      query: mutations.deleteTask,
+      variables: { input: { id: taskId } },
+    });
+    yield this.fetch();
   }
 
   setActiveTask(data?: TaskEntityType) {
