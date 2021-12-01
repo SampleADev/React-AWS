@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "apiName": "reactaws",
+    "serviceName": "AppSync",
+    "gqlSchemaPath": "E:\\repos\\react-aws\\amplify\\backend\\api\\reactaws\\schema.graphql",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 7
+    }
+  }
+}

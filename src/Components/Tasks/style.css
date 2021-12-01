@@ -1,0 +1,46 @@
+.tasksListRoot {
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.cardItemRoot {
+  position: relative;
+  min-width: 10rem;
+  max-width: 10rem;
+  padding: 1rem 1.875rem 1rem 1rem;
+  margin: 0 1.5rem 2rem 0;
+  min-height: 11rem;
+  max-height: 11rem;
+}
+.cardHeader {
+  margin-bottom: 1rem;
+}
+.taskItemTitle {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #000;
+  word-wrap: break-word;
+}
+.taskItemDescription {
+  font-weight: 400;
+  color: #42526e;
+  word-wrap: break-word;
+}
+.deleteIconButton {
+  position: absolute;
+  bottom: 0.675rem;
+  right: 0.675rem;
+}
+
+.deleteIconButton:hover {
+  cursor: pointer;
+}
+
+.cardIdRow {
+  display: flex;
+  align-items: center;
+}
+.cardIdRow svg:first-child {
+  margin-right: 0.375rem;
+}
